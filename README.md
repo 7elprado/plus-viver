@@ -106,33 +106,33 @@ Para testar no celular, escaneie o QR code com o aplicativo Expo Go. Para testar
 ## Estrutura do Projeto
 
 plus-viver/
-
+│
 ├── src/
-
+│   │   │
 │   ├── screens/
-
+│   │   │
 │   │   ├── LoginScreen.js
-
+│   │   │
 │   │   ├── DashboardScreen.js
-
+│   │   │
 │   │   ├── CenarioDetailScreen.js
-
+│   │   │
 │   │   ├── DenunciaScreen.js
-
+│   │   │
 │   │   └── ComunidadeScreen.js
-
+│   │
 │   ├── services/
-
+│   │   │
 │   │   └── firebase.js
-
+│   │
 │   └── styles/
-
+│       │
 │       └── global.js
-
+│
 ├── App.js
-
+│
 ├── package.json
-
+│
 └── README.md
 
 ## Evidências de Validação

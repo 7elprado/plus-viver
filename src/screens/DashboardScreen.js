@@ -143,7 +143,6 @@ export default function DashboardScreen({ navigation, route }) {
   }
   const Content = () => (
     <Animated.View style={{ opacity: fadeAnim, transform: [{ scale: scaleAnim }] }}>
-      {/* Header Profile */}
       <LinearGradient colors={colors.gradient} style={styles.header}>
         <View style={styles.headerTop}>
           <View style={styles.profileSection}>

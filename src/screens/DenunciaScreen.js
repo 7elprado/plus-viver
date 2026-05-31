@@ -10,9 +10,11 @@ import {
   Alert,
   SafeAreaView,
   Platform,
+  Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
+const { width } = Dimensions.get('window');
+const isSmallDevice = width < 380;
 const colors = {
   primary: '#6366F1',
   primaryDark: '#4F46E5',
@@ -27,7 +29,6 @@ const colors = {
   white: '#FFFFFF',
   black: '#000000',
 };
-
 const isWeb = Platform.OS === 'web';
 export default function DenunciaScreen({ navigation }) {
   const [tipo, setTipo] = useState('');
@@ -38,7 +39,6 @@ export default function DenunciaScreen({ navigation }) {
   const [contato, setContato] = useState('');
   const [loading, setLoading] = useState(false);
   const [enviada, setEnviada] = useState(false);
-
   const tipos = [
     { id: 'saude', nome: '🏥 Saúde', cor: '#EF4444' },
     { id: 'trabalho', nome: '🏢 Trabalho', cor: '#3B82F6' },
@@ -147,64 +147,52 @@ export default function DenunciaScreen({ navigation }) {
           </Pressable>
         ))}
       </View>
-      <Text style={styles.label}>Seu nome (opcional)</Text>
-      <TextInput
-        key="nome-input"
-        style={styles.input}
-        placeholder="Ex: João Silva"
-        placeholderTextColor={colors.grayLight}
-        value={nome}
-        onChangeText={setNome}
-      />
-      <Text style={styles.label}>E-mail ou WhatsApp (opcional)</Text>
-      <TextInput
-        key="contato-input"
-        style={styles.input}
-        placeholder="contato@email.com ou (11) 99999-9999"
-        placeholderTextColor={colors.grayLight}
-        value={contato}
-        onChangeText={setContato}
-        keyboardType="email-address"
-      />
-      <Text style={styles.label}>Local (endereço) *</Text>
-      <TextInput
-        key="local-input"
-        style={styles.input}
-        placeholder="Ex: Hospital X, Rua Y, 123 - São Paulo/SP"
-        placeholderTextColor={colors.grayLight}
-        value={local}
-        onChangeText={setLocal}
-      />
-      <Text style={styles.label}>Data do ocorrido</Text>
-      <TextInput
-        key="data-input"
-        style={styles.input}
-        placeholder="Ex: 25/05/2024"
-        placeholderTextColor={colors.grayLight}
-        value={data}
-        onChangeText={setData}
-      />
-      <Text style={styles.label}>Descrição detalhada *</Text>
-      <TextInput
-        key="descricao-input"
-        style={[styles.input, styles.textArea]}
-        placeholder="Descreva o que aconteceu, pessoas envolvidas, testemunhas..."
-        placeholderTextColor={colors.grayLight}
-        value={descricao}
-        onChangeText={setDescricao}
-        multiline
-        numberOfLines={6}
-        textAlignVertical="top"
-      />
+      <View style={styles.formSection}>
+        <TextInput
+          style={styles.input}
+          placeholder="Seu nome (opcional)"
+          placeholderTextColor={colors.grayLight}
+          value={nome}
+          onChangeText={setNome}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="E-mail ou WhatsApp (opcional)"
+          placeholderTextColor={colors.grayLight}
+          value={contato}
+          onChangeText={setContato}
+          keyboardType="email-address"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Local (endereço) *"
+          placeholderTextColor={colors.grayLight}
+          value={local}
+          onChangeText={setLocal}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Data do ocorrido"
+          placeholderTextColor={colors.grayLight}
+          value={data}
+          onChangeText={setData}
+        />
+        <TextInput
+          style={[styles.input, styles.textArea]}
+          placeholder="Descrição detalhada *"
+          placeholderTextColor={colors.grayLight}
+          value={descricao}
+          onChangeText={setDescricao}
+          multiline
+          numberOfLines={5}
+          textAlignVertical="top"
+        />
+      </View>
       <View style={styles.buttonRow}>
         <Pressable style={styles.limparButton} onPress={handleLimpar}>
           <Text style={styles.limparButtonText}>🗑️ LIMPAR</Text>
         </Pressable>
-        <Pressable
-          style={styles.enviarButton}
-          onPress={handleEnviar}
-          disabled={loading}
-        >
+        <Pressable style={styles.enviarButton} onPress={handleEnviar} disabled={loading}>
           {loading ? (
             <ActivityIndicator color={colors.white} />
           ) : (
@@ -231,16 +219,24 @@ export default function DenunciaScreen({ navigation }) {
       </View>
     </>
   );
+
   if (isWeb) {
     return (
       <div style={{ height: '100vh', overflowY: 'auto', backgroundColor: '#F3F4F6' }}>
-        <Content />
+        <div style={{ maxWidth: 600, margin: '0 auto', padding: 20 }}>
+          <Content />
+        </div>
       </div>
     );
   }
+
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView showsVerticalScrollIndicator={false} bounces={true}>
+      <ScrollView 
+        showsVerticalScrollIndicator={true} 
+        bounces={true}
+        contentContainerStyle={styles.scrollContent}
+      >
         <Content />
       </ScrollView>
     </SafeAreaView>
@@ -250,6 +246,9 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: '#F3F4F6',
+  },
+  scrollContent: {
+    paddingBottom: 30,
   },
   sucessoContainer: {
     flex: 1,
@@ -269,6 +268,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FFFFFF',
     marginBottom: 16,
+    textAlign: 'center',
   },
   sucessoTexto: {
     fontSize: 16,
@@ -312,6 +312,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FFFFFF',
     flex: 1,
+    textAlign: 'center',
   },
   legalCard: {
     margin: 16,
@@ -384,6 +385,9 @@ const styles = StyleSheet.create({
   tipoTextActive: {
     color: '#FFFFFF',
   },
+  formSection: {
+    paddingHorizontal: 16,
+  },
   input: {
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
@@ -392,8 +396,8 @@ const styles = StyleSheet.create({
     padding: 14,
     fontSize: 15,
     color: '#1F2937',
-    marginHorizontal: 16,
     marginBottom: 12,
+    width: '100%',
   },
   textArea: {
     height: 120,
@@ -471,5 +475,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#FFFFFF',
     textAlign: 'center',
+    marginVertical: 2,
   },
 });

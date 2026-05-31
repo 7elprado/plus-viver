@@ -38,7 +38,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Função para resetar senha (esqueci minha senha)
 export const resetarSenha = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
@@ -55,7 +54,6 @@ export const resetarSenha = async (email) => {
   }
 };
 
-// Funções de Autenticação
 export const registrarUsuario = async (email, senha, nome, peso, altura, idade, cidade, genero) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
@@ -165,7 +163,6 @@ export const logoutUsuario = async () => {
   }
 };
 
-// Funções de Denúncia
 export const registrarDenuncia = async (userId, denunciaData) => {
   try {
     const denuncia = {
