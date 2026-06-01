@@ -32,5 +32,3 @@ Durante a pesquisa, observou-se que:
 3. O custo do funeral foi citado como uma preocupação real
 4. A dificuldade de encontrar médicos que escutam foi o problema mais citado
 
-## Contato
-A comunidade demonstrou interesse em testar o aplicativo quando estiver disponível na Play Store.
